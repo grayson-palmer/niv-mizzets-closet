@@ -3,7 +3,7 @@ import './App.scss';
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import CardContainer from '../CardContainer/CardContainer';
-import { CardDetails } from '../../components/CardDetails/CardDetails.js.js';
+import { CardDetails } from '../../components/CardDetails/CardDetails.js';
 import { fetchDefaultCards } from '../../apiCalls/';
 import { getDefaultCards } from '../../actions';
 
