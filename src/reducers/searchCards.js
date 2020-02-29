@@ -1,7 +1,7 @@
 export const searchCardsReducer = (state = [], action) => {
   switch (action.type) {
-    case 'NAMED_SEARCH':
-      return action.searchCards
+    case 'SET_SEARCH_CARDS':
+      return action.cards
     default:
       return state
   }
