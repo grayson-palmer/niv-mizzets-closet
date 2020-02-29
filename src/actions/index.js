@@ -3,7 +3,7 @@ export const getDefaultCards = cards => ({
   cards
 });
 
-export const namedSearch = cards => ({
-  type: 'NAMED_SEARCH',
+export const setSearchCards = cards => ({
+  type: 'SET_SEARCH_CARDS',
   cards
 });
