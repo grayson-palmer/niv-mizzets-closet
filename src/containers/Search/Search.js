@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Search.scss';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { setSearchCards } from '../../actions';
 import { fetchCardsWithSearch } from '../../apiCalls';
 
@@ -34,12 +35,13 @@ export class Search extends Component {
           name='searchValue' 
           onChange={this.handleChange}
         />
-        <button 
+        <Link 
+          to={`/search/${this.state.searchValue}`}
           type='button'
           className='search__button' 
           onClick={() => this.handleClick()}
         >🔎
-        </button>
+        </Link>
       </form>
     )
   }
