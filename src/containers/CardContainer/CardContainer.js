@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import './CardContainer.scss';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { Card } from '../../components/Card/Card.js';
+import { setSelectedCard, clearSelectedCardInfo } from '../../actions';
 
 export class CardContainer extends Component {
   constructor() {
@@ -9,12 +11,33 @@ export class CardContainer extends Component {
   }
 
   render() {
-    if (this.props.searchCards && this.props.searchCards.length > 0) {
-      // console.log('search', this.props.searchCards);
+    if (this.props.artistCards.length > 0 && this.props.location.pathname.includes('cards')) {
+      let displayArtistCards = this.props.artistCards.map(card => {
+        if (card.image_uris) {
+          return <Card 
+          image = {card.image_uris.normal} 
+          name = {card.name}
+          key = {card.tcgplayer_id}
+          id = {card.tcgplayer_id}
+          setSelectedCard = {this.props.setSelectedCard}
+          clearSelectedCardInfo = {this.props.clearSelectedCardInfo}
+          />
+        }
+      })
+      return (
+        <section className='card-container'>
+          {displayArtistCards}
+        </section>
+      )
+    } else {
       let displaySearchCards = this.props.searchCards.map(card => {
         return <Card 
           image = {card.image_uris.normal} 
+          name = {card.name}
+          key = {card.tcgplayer_id}
           id = {card.tcgplayer_id}
+          setSelectedCard = {this.props.setSelectedCard}
+          clearSelectedCardInfo = {this.props.clearSelectedCardInfo}
         />
       })
       return (
@@ -22,29 +45,21 @@ export class CardContainer extends Component {
           {displaySearchCards}
         </section>
       )
-    } else {
-      let displayDefaultCards = this.props.defaultCards.map(card => {
-        // console.log('default', card.tcgplayer_id)
-        return <Card 
-          image = {card.image_uris.normal} 
-          id = {card.tcgplayer_id}
-        />
-      })
-      return (
-        <section className='card-container'>
-          {displayDefaultCards}
-        </section>
-      )
     }
   }
-}
+} 
 
 export const mapStateToProps = state => {
   return {
-    defaultCards: state.defaultCards,
-    searchCards: state.searchCards
+    searchCards: state.searchCards,
+    artistCards: state.artistCards
   }
 }
 
-export default connect(mapStateToProps)(CardContainer);
+export const mapDispatchToProps = dispatch => ({
+  setSelectedCard: (id) => dispatch(setSelectedCard(id)),
+  clearSelectedCardInfo: () => dispatch(clearSelectedCardInfo())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CardContainer));
 

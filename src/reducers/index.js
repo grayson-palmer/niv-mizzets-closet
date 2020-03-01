@@ -1,12 +1,16 @@
 import { combineReducers } from 'redux';
 import { searchCardsReducer } from './searchCards.js';
-import { defaultCardsReducer } from './defaultCards.js';
 import { loadingReducer } from './loading.js';
+import { artistCardsReducer } from './artistCards.js';
+import { selectedCardReducer } from './selectedCard.js';
+import { selectedCardInfoReducer } from './selectedCardInfo.js';
 
 const rootReducer = combineReducers({
-  defaultCards: defaultCardsReducer,
   searchCards: searchCardsReducer,
-  loadingStatus: loadingReducer 
+  loadingStatus: loadingReducer,
+  artistCards: artistCardsReducer,
+  selectedCard: selectedCardReducer,
+  selectedCardInfo: selectedCardInfoReducer
 })
 
 export default rootReducer;
