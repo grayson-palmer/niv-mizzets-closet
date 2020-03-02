@@ -19,10 +19,10 @@ export class Search extends Component {
 
   handleClick = () => {
     const { setSearchCards, loadingCards } = this.props;
+    loadingCards(true);
     fetchCardsWithSearch(this.state.searchValue)
-      .then(data => {
-        setSearchCards(data.data)
-        loadingCards(true);
+    .then(data => {
+      setSearchCards(data.data)
       })
     this.setState({ searchValue: '' })
     }
