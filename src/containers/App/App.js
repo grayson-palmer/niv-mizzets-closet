@@ -77,7 +77,6 @@ export const mapStateToProps = state => ({
 })
 
 export const mapDispatchToProps = dispatch => ({
-  // getDefaultCards: (defaultCards) => dispatch(getDefaultCards(defaultCards)),
   setSearchCards: (defaultCards) => dispatch(setSearchCards(defaultCards)),
   loadingCards: (loadingStatus) => dispatch(loadingCards(loadingStatus)),
   resetSearchCards: () => dispatch(resetSearchCards())
