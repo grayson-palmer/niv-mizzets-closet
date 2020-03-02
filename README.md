@@ -8,6 +8,9 @@
  - SASS
  - Scryfall API ( https://scryfall.com/docs/api )
  
+## Brief
+ The purpose of this application is to create a search database of Magic the Gathering cards with an emphasis on the card artwork. When a card is selected, the cards that have artwork by the same artist will populate on the right hand side. Users can favorite individual cards, and view the most recent price they are selling for on the market. All data is coming from the Scryfall API which has pricing updates every 24 hours.
+ 
 ### Learning Goals
  - Gain a better understanding of React/Redux/Router fundamentals and push what I know
  - Work with a public and more robust API structure
