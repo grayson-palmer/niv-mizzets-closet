@@ -1,14 +1,12 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import { Favorites, mapStateToProps } from './Favorites.js';
+import { fetchDefaultCards, fetchCardsWithSearch, fetchCardById } from '../apiCalls';
 
-describe('Favorites', () => {
-  let wrapper;
+
+describe('APICalls Testing', () => {
   let card1
   let card2
-
+  let mockResponse = [card1, card2];
+  
   beforeEach(() => {
-    wrapper = shallow(<Favorites />)
     card1 = {
       "object": "card",
       "id": "456627ec-81a4-40db-91dc-d25a59cd2837",
@@ -223,28 +221,106 @@ describe('Favorites', () => {
           "cardhoarder": "https://www.cardhoarder.com/cards/60755?affiliate_id=scryfall&ref=card-profile&utm_campaign=affiliate&utm_medium=card&utm_source=scryfall"
       }
     }
+    window.fetch = jest.fn().mockImplementation(() => {
+      return Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve(mockResponse)
+      })
+    });
   })
 
-  it('should match a snapshot', () => {
-    expect(wrapper).toMatchSnapshot()
-  })
-
-  describe('mapStateToProps', () => {
-    it ('should return an object with an array of cards', () => {
-      const mockState = {
-        searchCards: [card1, card2],
-        loadingStatus: false,
-        artistCards: [card1, card2],
-        selectedCard: card1.tcgplayer_id,
-        selectedCardInfo: card1,
-        favoriteCards: [card1, card2]
-      };
-      const expected = {
-        favoriteCards: [card1, card2]
-      };
-      const mappedProps = mapStateToProps(mockState);
-
-      expect(mappedProps).toEqual(expected);
+  describe('fetchDefaultCards', () => {
+  
+    it('should call fetch with the correct url', () => {
+      fetchDefaultCards();
+      expect(window.fetch).toHaveBeenCalledWith('https://api.scryfall.com/cards/search?order=released&q=set:thb+-st:token+-is:promo')
+    });
+  
+    it('should return an array of ideas (HAPPY)', () => {
+      fetchDefaultCards()
+        .then(cards => expect(cards).toEqual(mockResponse))
+    });
+  
+    it('should return an error (SAD)', () => {
+      window.fetch = jest.fn().mockImplementation(() => {
+        return Promise.resolve({
+          ok: false,
+        })
+      });
+      
+      expect(fetchDefaultCards()).rejects.toEqual(Error('Failed to retrieve default cards.'))
+    });
+  
+    it('should return an error if the Promise rejects', () => {
+      window.fetch = jest.fn().mockImplementation(() => {
+        return Promise.reject(Error('Failed to retrieve default cards.'))
+      })
+  
+      expect(fetchDefaultCards()).rejects.toEqual(Error('Failed to retrieve default cards.'))
     })
-  })
+  });
+
+  describe('fetchCardsWithSearch', () => {
+    let input = 'goblin';
+  
+    it('should call fetch with the correct url', () => {
+      fetchCardsWithSearch(input);
+      expect(window.fetch).toHaveBeenCalledWith(`https://api.scryfall.com/cards/search?q=${input}+-st:token+-is:promo`)
+    });
+  
+    it('should return an array of ideas (HAPPY)', () => {
+      fetchCardsWithSearch(input)
+        .then(cards => expect(cards).toEqual(mockResponse))
+    });
+  
+    it('should return an error (SAD)', () => {
+      window.fetch = jest.fn().mockImplementation(() => {
+        return Promise.resolve({
+          ok: false,
+        })
+      });
+      
+      expect(fetchCardsWithSearch(input)).rejects.toEqual(Error('Failed to retrieve search cards.'))
+    });
+  
+    it('should return an error if the Promise rejects', () => {
+      window.fetch = jest.fn().mockImplementation(() => {
+        return Promise.reject(Error('Failed to retrieve search cards.'))
+      })
+  
+      expect(fetchCardsWithSearch(input)).rejects.toEqual(Error('Failed to retrieve search cards.'))
+    })
+  });
+
+  describe('fetchCardById', () => {
+    let input = 123456;
+  
+    it('should call fetch with the correct url', () => {
+      fetchCardById(input);
+      expect(window.fetch).toHaveBeenCalledWith(`https://api.scryfall.com/cards/tcgplayer/${input}`)
+    });
+  
+    it('should return an array of ideas (HAPPY)', () => {
+      fetchCardById(input)
+        .then(cards => expect(cards).toEqual(mockResponse))
+    });
+  
+    it('should return an error (SAD)', () => {
+      window.fetch = jest.fn().mockImplementation(() => {
+        return Promise.resolve({
+          ok: false,
+        })
+      });
+      
+      expect(fetchCardById(input)).rejects.toEqual(Error('Failed to retrieve cards by ID.'))
+    });
+  
+    it('should return an error if the Promise rejects', () => {
+      window.fetch = jest.fn().mockImplementation(() => {
+        return Promise.reject(Error('Failed to retrieve cards by ID.'))
+      })
+  
+      expect(fetchCardById(input)).rejects.toEqual(Error('Failed to retrieve cards by ID.'))
+    })
+  });
 })

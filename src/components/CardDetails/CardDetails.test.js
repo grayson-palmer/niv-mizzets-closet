@@ -1,14 +1,13 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Favorites, mapStateToProps } from './Favorites.js';
+import { CardDetails, mapStateToProps, mapDispatchToProps } from './CardDetails.js';
+import { setArtistCards, loadSelectedCardInfo, addToFavorites, removeFromFavorites } from '../../actions';
 
-describe('Favorites', () => {
-  let wrapper;
+describe('CardDetails', () => {
   let card1
   let card2
 
   beforeEach(() => {
-    wrapper = shallow(<Favorites />)
     card1 = {
       "object": "card",
       "id": "456627ec-81a4-40db-91dc-d25a59cd2837",
@@ -225,10 +224,6 @@ describe('Favorites', () => {
     }
   })
 
-  it('should match a snapshot', () => {
-    expect(wrapper).toMatchSnapshot()
-  })
-
   describe('mapStateToProps', () => {
     it ('should return an object with an array of cards', () => {
       const mockState = {
@@ -240,11 +235,55 @@ describe('Favorites', () => {
         favoriteCards: [card1, card2]
       };
       const expected = {
+        selectedCard: card1.tcgplayer_id,
+        selectedCardInfo: card1,
         favoriteCards: [card1, card2]
       };
       const mappedProps = mapStateToProps(mockState);
 
       expect(mappedProps).toEqual(expected);
+    })
+  })
+
+  describe('mapDispatchToProps', () => {
+    it ('should call dispatch with the setArtistsCards action when it is called', () => {
+      const mockDispatch = jest.fn();
+      const actionToDispatch = setArtistCards([card1, card2]);
+
+      const mappedProps = mapDispatchToProps(mockDispatch);
+      mappedProps.setArtistCards([card1, card2]);
+
+      expect(mockDispatch).toHaveBeenCalledWith(actionToDispatch);
+    })
+
+    it ('should call dispatch with the loadSelectedCardInfo action when it is called', () => {
+      const mockDispatch = jest.fn();
+      const actionToDispatch = loadSelectedCardInfo(card1);
+
+      const mappedProps = mapDispatchToProps(mockDispatch);
+      mappedProps.loadSelectedCardInfo(card1);
+
+      expect(mockDispatch).toHaveBeenCalledWith(actionToDispatch);
+    })
+
+    it ('should call dispatch with the addToFavorites action when it is called', () => {
+      const mockDispatch = jest.fn();
+      const actionToDispatch = addToFavorites(card1);
+
+      const mappedProps = mapDispatchToProps(mockDispatch);
+      mappedProps.addToFavorites(card1);
+
+      expect(mockDispatch).toHaveBeenCalledWith(actionToDispatch);
+    })
+
+    it ('should call dispatch with the removeFromFavorites action when it is called', () => {
+      const mockDispatch = jest.fn();
+      const actionToDispatch = removeFromFavorites(card1);
+
+      const mappedProps = mapDispatchToProps(mockDispatch);
+      mappedProps.removeFromFavorites(card1);
+
+      expect(mockDispatch).toHaveBeenCalledWith(actionToDispatch);
     })
   })
 })

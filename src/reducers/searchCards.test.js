@@ -1,14 +1,10 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import { Favorites, mapStateToProps } from './Favorites.js';
+import { searchCardsReducer } from './searchCards.js';
 
-describe('Favorites', () => {
-  let wrapper;
+describe('searchCardsReducer', () => {
   let card1
   let card2
 
   beforeEach(() => {
-    wrapper = shallow(<Favorites />)
     card1 = {
       "object": "card",
       "id": "456627ec-81a4-40db-91dc-d25a59cd2837",
@@ -225,26 +221,33 @@ describe('Favorites', () => {
     }
   })
 
-  it('should match a snapshot', () => {
-    expect(wrapper).toMatchSnapshot()
+  it ('should have an initial state of an empty array', () => {
+    const expected = [];
+    const result = searchCardsReducer(undefined, {})
+
+    expect(result).toEqual(expected)
   })
 
-  describe('mapStateToProps', () => {
-    it ('should return an object with an array of cards', () => {
-      const mockState = {
-        searchCards: [card1, card2],
-        loadingStatus: false,
-        artistCards: [card1, card2],
-        selectedCard: card1.tcgplayer_id,
-        selectedCardInfo: card1,
-        favoriteCards: [card1, card2]
-      };
-      const expected = {
-        favoriteCards: [card1, card2]
-      };
-      const mappedProps = mapStateToProps(mockState);
+  it ('should return the correct state if the action type is SET_SEARCH_CARDS', () => {
+    const cards = [card1, card2]
+    const mockAction = {
+      type: 'SET_SEARCH_CARDS',
+      cards
+    }
+    const mockState = [];
+    const result = searchCardsReducer(mockState, mockAction);
 
-      expect(mappedProps).toEqual(expected);
-    })
+    expect(result).toEqual([card1, card2])
+  })
+
+  it ('should return the correct state if the action type is RESET_SEARCH_CARDS', () => {
+    const mockAction = {
+      type: 'SET_SEARCH_CARDS',
+      cards: []
+    }
+    const mockState = [card1, card2];
+    const result = searchCardsReducer(mockState, mockAction);
+
+    expect(result).toEqual([])
   })
 })
