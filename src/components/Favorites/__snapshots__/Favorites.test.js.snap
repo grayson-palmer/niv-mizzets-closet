@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Favorites should match a snapshot 1`] = `
+<section
+  className="favorites"
+>
+  <h2>
+    Favorites
+  </h2>
+  <Connect(withRouter(CardContainer))
+    className="favorites__cards"
+  />
+</section>
+`;
