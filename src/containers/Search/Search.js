@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Search.scss';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setSearchCards } from '../../actions';
+import { setSearchCards, loadingCards } from '../../actions';
 import { fetchCardsWithSearch } from '../../apiCalls';
 
 export class Search extends Component {
@@ -14,16 +14,18 @@ export class Search extends Component {
   }
 
   handleChange = e => {
-    this.setState({ [e.target.name]: e.target.value })
+    this.setState({ searchValue: e.target.value })
   }
 
   handleClick = () => {
+    const { setSearchCards, loadingCards } = this.props;
     fetchCardsWithSearch(this.state.searchValue)
       .then(data => {
-        this.props.setSearchCards(data.data)
-        this.setState({ searchValue: '' })
+        setSearchCards(data.data)
+        loadingCards(true);
       })
-  }
+    this.setState({ searchValue: '' })
+    }
 
   render() {
     return (
@@ -48,7 +50,8 @@ export class Search extends Component {
 }
 
 export const mapDispatchToProps = dispatch => ({
-  setSearchCards: (cards) => dispatch(setSearchCards(cards))
+  setSearchCards: (cards) => dispatch(setSearchCards(cards)),
+  loadingCards: (loadingStatus) => dispatch(loadingCards(loadingStatus))
 })
 
 export default connect(null, mapDispatchToProps)(Search)

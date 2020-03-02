@@ -32,3 +32,13 @@ export const setArtistCards = cards => ({
   type: 'SET_ARTIST_CARDS',
   cards
 });
+
+export const addToFavorites = card => ({
+  type: 'ADD_TO_FAVORITES',
+  card
+})
+
+export const removeFromFavorites = card => ({
+  type: 'REMOVE_FROM_FAVORITES',
+  card
+})

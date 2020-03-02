@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import CardContainer from '../CardContainer/CardContainer.js';
 import CardDetails from '../../components/CardDetails/CardDetails.js';
+import Favorites from '../../components/Favorites/Favorites.js';
 import { Header } from '../../components/Header/Header.js';
 import { Loading } from '../../components/Loading/Loading.js';
 import { fetchDefaultCards, fetchCardsWithSearch } from '../../apiCalls/';
@@ -16,9 +17,12 @@ export class App extends Component {
   }
 
   resetWithDefaultCards = () => {
-    const { resetSearchCards, loadingCards } = this.props;
-    resetSearchCards();
-    loadingCards(true);
+    const { setSearchCards, loadingCards } = this.props;
+    fetchDefaultCards()
+    .then(data => {
+      setSearchCards(data.data)
+      loadingCards(true)
+    })
   }
 
   componentDidMount() {
@@ -49,17 +53,16 @@ export class App extends Component {
     }
     return (
         <main>
-          <Header  />
+          <Header resetWithDefaultCards={this.resetWithDefaultCards} />
           <Switch>
             <Route
               path='/cards/:id'
               render={() => <CardDetails />} />
-              {/* // render={ ({ match }) => 
-              //   <CardDetails
-              //     selectedCard={ match.params.id }/> } /> */}
+            <Route
+              path='/favorites'
+              render={() => <Favorites />} />
             <Route
               path='/'
-              // render={() => <CardContainer resetWithDefaultCards={() => this.resetWithDefaultCards()} />}>
               render={() => <CardContainer />} />
           </Switch>
         </main>
