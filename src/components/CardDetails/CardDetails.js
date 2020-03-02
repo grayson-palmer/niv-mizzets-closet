@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './CardDetails.scss';
 import { connect } from 'react-redux';
-import { setArtistCards, loadSelectedCardInfo } from '../../actions';
+import { setArtistCards, loadSelectedCardInfo, addToFavorites, removeFromFavorites } from '../../actions';
 import { fetchCardsWithSearch, fetchCardById } from '../../apiCalls';
 import CardContainer from '../../containers/CardContainer/CardContainer.js';
 import { Loading } from '../Loading/Loading.js';
@@ -9,6 +9,12 @@ import { Loading } from '../Loading/Loading.js';
 export class CardDetails extends Component {
   constructor() {
     super();
+  }
+
+  appendToFavorites = () => {
+    if(!this.props.favoriteCards.includes(this.props.selectedCardInfo)){
+      this.props.addToFavorites(this.props.selectedCardInfo)
+    }
   }
 
   async componentDidMount() {
@@ -45,6 +51,21 @@ export class CardDetails extends Component {
           <p>Release Date: { released_at }</p>
           <p>Set Name: { set_name }</p>
           <p>Current Price: ${ prices.usd }</p>
+          {!this.props.favoriteCards.includes(this.props.selectedCardInfo) ? 
+          <button 
+            className='card-details__add-favorite' 
+            type='button'
+            onClick={this.appendToFavorites}
+          >
+            Add to Favorites
+          </button> : 
+          <button 
+          className='card-details__remove-favorite' 
+          type='button'
+          onClick={() => this.props.removeFromFavorites(this.props.selectedCardInfo)}
+        >
+          Remove to Favorites
+        </button> }
         </div>
       </div>
       <div className='card-details__artist-related'>
@@ -56,14 +77,16 @@ export class CardDetails extends Component {
 }
 
 const mapStateToProps = state => ({
-  artistCards: state.artistCards,
   selectedCard: state.selectedCard,
-  selectedCardInfo: state.selectedCardInfo
+  selectedCardInfo: state.selectedCardInfo,
+  favoriteCards: state.favoriteCards
 })
 
 const mapDispatchToProps = dispatch => ({
   setArtistCards: (artistCards) => dispatch(setArtistCards(artistCards)),
-  loadSelectedCardInfo: (card) => dispatch(loadSelectedCardInfo(card))
+  loadSelectedCardInfo: (card) => dispatch(loadSelectedCardInfo(card)),
+  addToFavorites: (card) => dispatch(addToFavorites(card)),
+  removeFromFavorites: (card) => dispatch(removeFromFavorites(card))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardDetails);
