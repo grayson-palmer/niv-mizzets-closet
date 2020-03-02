@@ -3,6 +3,7 @@ import './CardContainer.scss';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Card } from '../../components/Card/Card.js';
+import { Loading } from '../../components/Loading/Loading.js';
 import { setSelectedCard, clearSelectedCardInfo } from '../../actions';
 
 export class CardContainer extends Component {
@@ -11,7 +12,9 @@ export class CardContainer extends Component {
   }
 
   render() {
-    if (this.props.location.pathname.includes('cards')) {
+    if (this.props.loadingStatus) {
+      return <Loading />
+    } else if (this.props.location.pathname.includes('cards')) {
       let displayArtistCards = this.props.artistCards.map(card => {
         if (card.image_uris) {
           return <Card 
@@ -72,6 +75,7 @@ export class CardContainer extends Component {
 export const mapStateToProps = state => {
   return {
     searchCards: state.searchCards,
+    loadingStatus: state.loadingStatus,
     artistCards: state.artistCards,
     favoriteCards: state.favoriteCards
   }
