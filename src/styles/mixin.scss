@@ -4,3 +4,19 @@
   align-items: $align;
   justify-content: $justify;
 }
+
+@mixin box-shadow ($start, $end) {
+  box-shadow: $start $accent-color;
+  transition: box-shadow 0.3s ease-in-out;
+	&:hover {
+		box-shadow: $end $accent-color
+	}
+}
+
+@mixin text-shadow ($start, $end) {
+  text-shadow: $start $swamp-color;
+  transition: text-shadow 0.3s ease-in-out;
+	&:hover {
+		text-shadow: $end $swamp-color
+	}
+}

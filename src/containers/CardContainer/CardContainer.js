@@ -11,7 +11,6 @@ export class CardContainer extends Component {
   }
 
   render() {
-    console.log(this.props)
     if (this.props.location.pathname.includes('cards')) {
       let displayArtistCards = this.props.artistCards.map(card => {
         if (card.image_uris) {

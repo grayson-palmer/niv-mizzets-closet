@@ -1,0 +1,24 @@
+@import '../../styles/mixin.scss';
+@import '../../styles/variables.scss';
+
+.search {
+  justify-self: center;
+  width: 16em;
+  &__input {
+    border: none;
+    border-bottom: 0.1em solid $accent-color;
+    background-color: transparent;
+    color: $accent-color;
+    font-family: 'Aladin', cursive;
+    font-size: 1.5em;
+    padding: 0.25em;
+    width: 8em;
+  }
+  &__button {
+    background-color: darken($island-color, 20%);
+    border-bottom: 0.1em solid $accent-color;
+    font-size: 1.5em;
+    padding: 0.25em;
+    text-decoration: none;
+  }
+}

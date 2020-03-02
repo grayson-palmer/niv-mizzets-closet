@@ -13,12 +13,19 @@ export const Header = (props) => {
     >
         Niv-Mizzet's Closet
     </Link>
-    <Search />
-    <NavLink
-      to={'/favorites'}
-      className='header__favorites'>
-        Favorites
-    </NavLink>
+    <div className='header__actions'>
+      <NavLink
+        to={'/favorites'}
+        className='header__favorites'>
+          Favorites
+      </NavLink>
+      <Search />
+      <NavLink
+        to={'/login'}
+        className='header__login'>
+          Login
+      </NavLink>
+    </div>
   </div>
   )
 }

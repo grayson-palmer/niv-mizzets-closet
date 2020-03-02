@@ -12,7 +12,7 @@ export class Favorites extends Component {
     return (
       <section className='favorites'>
         <h2>Favorites</h2>
-        <CardContainer />
+        <CardContainer className='favorites__cards'/>
       </section>
     )
   }

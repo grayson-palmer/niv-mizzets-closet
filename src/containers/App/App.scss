@@ -2,5 +2,6 @@
 
 main {
   @include display-flex(column nowrap, center, flex-start);
+  font-family: 'Aladin', cursive;
   height: 100vh;
 }
