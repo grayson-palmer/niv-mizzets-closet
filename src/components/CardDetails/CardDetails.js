@@ -78,13 +78,13 @@ export class CardDetails extends Component {
   } 
 }
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   selectedCard: state.selectedCard,
   selectedCardInfo: state.selectedCardInfo,
   favoriteCards: state.favoriteCards
 })
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   setArtistCards: (artistCards) => dispatch(setArtistCards(artistCards)),
   loadSelectedCardInfo: (card) => dispatch(loadSelectedCardInfo(card)),
   addToFavorites: (card) => dispatch(addToFavorites(card)),
