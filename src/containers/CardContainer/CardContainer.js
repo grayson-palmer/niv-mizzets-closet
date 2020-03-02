@@ -11,7 +11,8 @@ export class CardContainer extends Component {
   }
 
   render() {
-    if (this.props.artistCards.length > 0 && this.props.location.pathname.includes('cards')) {
+    console.log(this.props)
+    if (this.props.location.pathname.includes('cards')) {
       let displayArtistCards = this.props.artistCards.map(card => {
         if (card.image_uris) {
           return <Card 
@@ -26,7 +27,27 @@ export class CardContainer extends Component {
       })
       return (
         <section className='card-container'>
-          {displayArtistCards}
+          {this.props.artistCards.length > 1 ?
+            displayArtistCards : 
+            <p>No other cards by this artist</p>}
+        </section>
+      )
+    } else if (this.props.location.pathname.includes('favorites')) {
+      let displayFavoriteCards = this.props.favoriteCards.map(card => {
+        return <Card 
+          image = {card.image_uris.normal} 
+          name = {card.name}
+          key = {card.tcgplayer_id}
+          id = {card.tcgplayer_id}
+          setSelectedCard = {this.props.setSelectedCard}
+          clearSelectedCardInfo = {this.props.clearSelectedCardInfo}
+        />
+      })
+      return (
+        <section className='card-container'>
+          {this.props.favoriteCards.length > 0 ? 
+            displayFavoriteCards : 
+            <p>Please search for a card to add to your favorites</p>}
         </section>
       )
     } else {
@@ -52,7 +73,8 @@ export class CardContainer extends Component {
 export const mapStateToProps = state => {
   return {
     searchCards: state.searchCards,
-    artistCards: state.artistCards
+    artistCards: state.artistCards,
+    favoriteCards: state.favoriteCards
   }
 }
 
