@@ -1,14 +1,10 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import { Favorites, mapStateToProps } from './Favorites.js';
+import { favoritesReducer } from './favoriteCards.js';
 
-describe('Favorites', () => {
-  let wrapper;
+describe('favoritesReducer', () => {
   let card1
   let card2
 
   beforeEach(() => {
-    wrapper = shallow(<Favorites />)
     card1 = {
       "object": "card",
       "id": "456627ec-81a4-40db-91dc-d25a59cd2837",
@@ -225,26 +221,32 @@ describe('Favorites', () => {
     }
   })
 
-  it('should match a snapshot', () => {
-    expect(wrapper).toMatchSnapshot()
+  it ('should have an initial state of an empty array', () => {
+    const expected = [];
+    const result = favoritesReducer(undefined, [])
+
+    expect(result).toEqual(expected)
   })
 
-  describe('mapStateToProps', () => {
-    it ('should return an object with an array of cards', () => {
-      const mockState = {
-        searchCards: [card1, card2],
-        loadingStatus: false,
-        artistCards: [card1, card2],
-        selectedCard: card1.tcgplayer_id,
-        selectedCardInfo: card1,
-        favoriteCards: [card1, card2]
-      };
-      const expected = {
-        favoriteCards: [card1, card2]
-      };
-      const mappedProps = mapStateToProps(mockState);
+  it ('should return the correct state if the action type is ADD_TO_FAVORITES', () => {
+    const mockAction = {
+      type: 'ADD_TO_FAVORITES',
+      card: card2
+    }
+    const mockState = [card1];
+    const result = favoritesReducer(mockState, mockAction);
 
-      expect(mappedProps).toEqual(expected);
-    })
+    expect(result).toEqual([card1, card2])
+  })
+
+  it ('should return the correct state if the action type is REMOVE_FROM_FAVORITES', () => {
+    const mockAction = {
+      type: 'REMOVE_FROM_FAVORITES',
+      card: card2
+    }
+    const mockState = [card1, card2];
+    const result = favoritesReducer(mockState, mockAction);
+
+    expect(result).toEqual([card1])
   })
 })

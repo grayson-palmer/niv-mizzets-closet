@@ -1,14 +1,15 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Favorites, mapStateToProps } from './Favorites.js';
+import { Search, mapDispatchToProps } from './Search.js';
+import { setSearchCards, loadingCards } from '../../actions';
 
-describe('Favorites', () => {
+describe('Search', () => {
   let wrapper;
   let card1
   let card2
 
   beforeEach(() => {
-    wrapper = shallow(<Favorites />)
+    wrapper = shallow(<Search />)
     card1 = {
       "object": "card",
       "id": "456627ec-81a4-40db-91dc-d25a59cd2837",
@@ -225,26 +226,43 @@ describe('Favorites', () => {
     }
   })
 
-  it('should match a snapshot', () => {
+  it ('should match a snapshot', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
-  describe('mapStateToProps', () => {
-    it ('should return an object with an array of cards', () => {
-      const mockState = {
-        searchCards: [card1, card2],
-        loadingStatus: false,
-        artistCards: [card1, card2],
-        selectedCard: card1.tcgplayer_id,
-        selectedCardInfo: card1,
-        favoriteCards: [card1, card2]
-      };
-      const expected = {
-        favoriteCards: [card1, card2]
-      };
-      const mappedProps = mapStateToProps(mockState);
+  it ('should be able to make changes to state', () => {
+    wrapper = shallow(<Search />);
+    const mockEvent = {target: {name: 'searchValue', value: 'goblin'}};
+    const expected = 'goblin';
+    wrapper.instance().handleChange(mockEvent);
+    expect(wrapper.state('searchValue')).toEqual(expected);
+  })
 
-      expect(mappedProps).toEqual(expected);
+  it ('should call the handleClick function when link is clicked', () => {
+    wrapper.instance().handleClick = jest.fn();
+    wrapper.find('.search__button').simulate('click');
+    expect(wrapper.instance().handleClick).toHaveBeenCalled();
+  })
+
+  describe('mapDispatchToProps', () => {
+    it ('should call dispatch with the setSearchCards action when it is called', () => {
+      const mockDispatch = jest.fn();
+      const actionToDispatch = setSearchCards([card1, card2]);
+
+      const mappedProps = mapDispatchToProps(mockDispatch);
+      mappedProps.setSearchCards([card1, card2]);
+
+      expect(mockDispatch).toHaveBeenCalledWith(actionToDispatch);
+    })
+
+    it ('should call dispatch with the loadingCards action when it is called', () => {
+      const mockDispatch = jest.fn();
+      const actionToDispatch = loadingCards();
+
+      const mappedProps = mapDispatchToProps(mockDispatch);
+      mappedProps.loadingCards();
+
+      expect(mockDispatch).toHaveBeenCalledWith(actionToDispatch);
     })
   })
 })

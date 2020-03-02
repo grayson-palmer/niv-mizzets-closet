@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header should match a snapshot 1`] = `
+<div
+  className="header"
+>
+  <Link
+    className="header__title"
+    onClick={[Function]}
+    to="/"
+  >
+    Niv-Mizzet's Closet
+  </Link>
+  <div
+    className="header__actions"
+  >
+    <NavLink
+      className="header__favorites"
+      to="/favorites"
+    >
+      Favorites
+    </NavLink>
+    <Connect(Search) />
+    <NavLink
+      className="header__login"
+      to="/login"
+    >
+      Login
+    </NavLink>
+  </div>
+</div>
+`;

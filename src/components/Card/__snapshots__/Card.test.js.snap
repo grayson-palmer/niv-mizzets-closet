@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Card should match a snapshot 1`] = `
+<Link
+  className="card"
+  onClick={[Function]}
+  to="/cards/undefined"
+>
+  <img
+    alt="undefined card picture"
+    className="card__image"
+  />
+</Link>
+`;

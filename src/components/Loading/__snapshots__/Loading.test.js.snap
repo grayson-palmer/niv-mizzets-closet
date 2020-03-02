@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Loading should match a snapshot 1`] = `
+<div
+  className="lds-roller"
+>
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+</div>
+`;

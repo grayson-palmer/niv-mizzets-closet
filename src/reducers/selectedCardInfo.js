@@ -3,7 +3,7 @@ export const selectedCardInfoReducer = (state = {}, action) => {
     case 'LOAD_SELECTED_CARD':
       return action.card
     case 'CLEAR_SELECTED_CARD':
-      return state
+      return {}
     default:
       return state
   }
