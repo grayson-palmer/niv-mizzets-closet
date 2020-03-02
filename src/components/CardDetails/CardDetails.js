@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './CardDetails.scss';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { setArtistCards, loadSelectedCardInfo, addToFavorites, removeFromFavorites } from '../../actions';
 import { fetchCardsWithSearch, fetchCardById } from '../../apiCalls';
 import CardContainer from '../../containers/CardContainer/CardContainer.js';
@@ -43,9 +44,9 @@ export class CardDetails extends Component {
     const { image_uris, name, released_at, set_name, artist, prices } = this.props.selectedCardInfo
     return (
     <section className='card-details'>
-      <div className='card-details__info'>
-        <img src={ image_uris.normal } alt={ `image of ${name} card` } />
-        <div className='card-details__description'>
+      <div className='card-details-info'>
+        <img className='card-details-info__image' src={ image_uris.normal } alt={ `image of ${name} card` } />
+        <div className='card-details-info__description'>
           <h2>{ name }</h2>
           <h3>Art By: { artist }</h3>
           <p>Release Date: { released_at }</p>
@@ -53,22 +54,23 @@ export class CardDetails extends Component {
           <p>Current Price: ${ prices.usd }</p>
           {!this.props.favoriteCards.includes(this.props.selectedCardInfo) ? 
           <button 
-            className='card-details__add-favorite' 
+            className='card-details-info__add-favorite' 
             type='button'
             onClick={this.appendToFavorites}
           >
             Add to Favorites
           </button> : 
           <button 
-          className='card-details__remove-favorite' 
+          className='card-details-info__remove-favorite' 
           type='button'
           onClick={() => this.props.removeFromFavorites(this.props.selectedCardInfo)}
         >
-          Remove to Favorites
+          Remove from Favorites
         </button> }
         </div>
       </div>
-      <div className='card-details__artist-related'>
+      <div className='card-details-info__artist-related'>
+        <h3>Other Card Artwork By {artist}</h3>
         <CardContainer />
       </div>
     </section>
@@ -89,4 +91,4 @@ const mapDispatchToProps = dispatch => ({
   removeFromFavorites: (card) => dispatch(removeFromFavorites(card))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(CardDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CardDetails));

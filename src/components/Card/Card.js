@@ -2,7 +2,7 @@ import React from 'react';
 import './Card.scss';
 import { Link } from 'react-router-dom';
 
-export const Card = ({ name, image, id, setSelectedCard, clearSelectedCardInfo }) => {
+export const Card = ({ name, image, id, setSelectedCard }) => {
   return (
     <Link 
       to={`/cards/${id}`} 
@@ -11,7 +11,7 @@ export const Card = ({ name, image, id, setSelectedCard, clearSelectedCardInfo }
       onClick={() => {
         setSelectedCard(id)}}
     >
-      <img src={image} alt={`${name} card picture`} />
+      <img className='card__image' src={image} alt={`${name} card picture`} />
     </Link>
   )
 }

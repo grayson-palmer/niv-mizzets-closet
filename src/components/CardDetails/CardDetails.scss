@@ -1,0 +1,62 @@
+@import '../../styles/mixin.scss';
+@import '../../styles/variables.scss';
+
+.card-details {
+  @include display-flex(row nowrap, center, space-between);
+}
+
+.card-details-info {
+  @include display-flex(row nowrap, center, space-between);
+  &__image {
+    border-radius: 1.5em;
+    margin: 1.5em;
+    width: 50%;
+  }
+  &__description {
+    color: $accent-color;
+    font-size: 1.5em;
+    margin: 1em;
+    padding: 1em;
+    width: 30%;
+  }
+  &__artist-related {
+    background-color: $swamp-color;
+    border-radius: 1em;
+    color: $accent-color;
+    height: 80vh;
+    margin: 1em;
+    overflow: auto;
+    text-align: center;
+    width: 25%;
+    & > h3 {
+      font-size: 1.5em;
+    }
+  }
+}
+
+
+.card-details-info__add-favorite,
+.card-details-info__remove-favorite {
+  border: none;
+  border-radius: 0.5em;
+  font-family: 'Aladin', cursive;
+  font-size: 1em;
+  padding: 0.5em;
+  width: 10em;
+}
+
+.card-details-info__add-favorite {
+  background-color: $plains-color;
+  &:hover {
+    background-color: $forest-color;
+  }
+}
+
+.card-details-info__remove-favorite {
+  background-color: $swamp-color;
+  color: $plains-color;
+  &:hover {
+    background-color: $mountain-color;
+    color: $swamp-color;
+  }
+}

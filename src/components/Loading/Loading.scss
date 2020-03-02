@@ -23,6 +23,7 @@
   animation-delay: -0.5s;
 }
 .lds-roller div:nth-child(1):after {
+  @include box-shadow(0 0 2.5em 0.5em, 0 0 0 0);
   background: $plains-color;
   top: 2em;
   left: 2em;
@@ -31,6 +32,7 @@
   animation-delay: -1s;
 }
 .lds-roller div:nth-child(2):after {
+  @include box-shadow(0 0 2.5em 0.5em, 0 0 0 0);
   background: $island-color;
   top: 2em;
   left: 2em;
@@ -39,6 +41,7 @@
   animation-delay: -1.5s;
 }
 .lds-roller div:nth-child(3):after {
+  @include box-shadow(0 0 2.5em 0.5em, 0 0 0 0);
   background: $swamp-color;
   top: 2em;
   left: 2em;
@@ -47,6 +50,7 @@
   animation-delay: -2s;
 }
 .lds-roller div:nth-child(4):after {
+  @include box-shadow(0 0 2.5em 0.5em, 0 0 0 0);
   background: $mountain-color;
   top: 2em;
   left: 2em;
@@ -55,6 +59,7 @@
   animation-delay: -2.5s;
 }
 .lds-roller div:nth-child(5):after {
+  @include box-shadow(0 0 2.5em 0.5em, 0 0 0 0);
   background: $forest-color;
   top: 2em;
   left: 2em;

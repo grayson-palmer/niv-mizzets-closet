@@ -1,0 +1,8 @@
+@import '../../styles/mixin.scss';
+@import '../../styles/variables.scss';
+
+.card-container {
+  @include display-flex(row wrap, center, center);
+  background-color: $swamp-color;
+  width: 100%;
+}
