@@ -3,7 +3,7 @@ export const searchCardsReducer = (state = [], action) => {
     case 'SET_SEARCH_CARDS':
       return action.cards
     case 'RESET_SEARCH_CARDS':
-      return action.cards
+      return state
     default:
       return state
   }
