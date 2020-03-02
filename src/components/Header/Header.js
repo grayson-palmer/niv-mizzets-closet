@@ -1,27 +1,24 @@
 import React from 'react';
 import './Header.scss';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import Search from '../../containers/Search/Search.js';
-// import { resetSearchCards } from '../../actions';
 
-export const Header = () => {
+export const Header = (props) => {
   return (
   <div className='header'>
     <Link 
       to={'/'} 
       className='header__title'
-      // onClick={() => this.props.resetWithDefaultCards()}
+      onClick={() => props.resetWithDefaultCards()}
     >
         Niv-Mizzet's Closet
     </Link>
     <Search />
+    <NavLink
+      to={'/favorites'}
+      className='header__favorites'>
+        Favorites
+    </NavLink>
   </div>
   )
 }
-
-// export const mapDispatchToProps = dispatch => ({
-//   resetSearchCards: () => dispatch( resetSearchCards() )
-// })
-
-// export default connect(null, mapDispatchToProps)(Header);
